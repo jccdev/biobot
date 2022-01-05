@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 interface PagerProps {
 	currentPage: number;
 	pageSize: number;
 	totalCount: number;
-	onChange: ( page: number ) => void;
+	onChange: (page: number) => void;
 }
 
 export function Pager(props: PagerProps) {
@@ -13,7 +13,7 @@ export function Pager(props: PagerProps) {
 		page = page <= 0 ? totalPages() : page; // wrap page around
 		props.onChange(page);
 	}
-	
+
 	function next() {
 		let page = props.currentPage + 1;
 		page = page > totalPages() ? 1 : page;
@@ -26,11 +26,25 @@ export function Pager(props: PagerProps) {
 
 	return (
 		<div>
-			<button type="button" className="btn btn-outline-dark" onClick={e => previous()}><i className="bi bi-arrow-left"></i></button>
-			<span className="mx-1">{props.currentPage} / {totalPages()}</span>
-			<button type="button" className="btn btn-outline-dark" onClick={e => next()}><i className="bi bi-arrow-right"></i></button>
+			<button
+				type="button"
+				className="btn btn-outline-dark"
+				onClick={(e) => previous()}
+			>
+				<i className="bi bi-arrow-left"></i>
+			</button>
+			<span className="mx-1">
+				{props.currentPage} / {totalPages()}
+			</span>
+			<button
+				type="button"
+				className="btn btn-outline-dark"
+				onClick={(e) => next()}
+			>
+				<i className="bi bi-arrow-right"></i>
+			</button>
 		</div>
-	)
+	);
 }
 
 export default Pager;

@@ -15,7 +15,7 @@ You can reset the DB by deleting the db/local.sqlite3 file and run this command 
 ### `yarn api-start`
 
 Runs the Koa api app in the development mode.\
-Reachable at the url: [http://localhost:3001](http://localhost:3001). 
+Reachable at the url: [http://localhost:3001](http://localhost:3001).
 
 The api will reload on changes.
 
