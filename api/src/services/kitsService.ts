@@ -1,26 +1,37 @@
-import { Kit } from "../types/kit";
+import { Kit } from "../shared-types/kit";
+import { PagedResult } from "../shared-types/pagedResult";
 import { DataAccess } from "./dataAccess";
 
 export class KitsService {
-	static async get(options?: Partial<{ pageSize: number; page: number;}>): Promise<{ values: Kit[], page: number, pageSize: number, total_count: number }> {
+	static async get(options?: Partial<{ search?: string; pageSize: number; page: number;}>): Promise<PagedResult<Kit>> {
 		const innerOpts = {
-			pageSize: options.pageSize ?? 20,
+			search: options.search,
+			pageSize: options.pageSize ?? 10,
 			page: options.page ?? 1,
 		}
 		
 		let query = DataAccess.db.select();
-		const values = await query.clone().offset((innerOpts.page - 1) * innerOpts.pageSize).limit(innerOpts.pageSize).from<Kit>('kits');
+
+		if(innerOpts.search) {
+			const match = `%${innerOpts.search}%`;
+			query = query
+				.orWhere('id', 'like', match)
+				.orWhere('label_id', 'like', match)
+				.orWhere('shipping_tracking_code', 'like', match)
+		}
+		
+		const data = await query.clone().offset((innerOpts.page - 1) * innerOpts.pageSize).limit(innerOpts.pageSize).from<Kit>('kits');
 		const total_count = +((await query.clone().count('*').from<Kit>('kits'))[0]['count(*)']);
 		
-		return { values, page: innerOpts.page, pageSize: innerOpts.pageSize, total_count };
+		return { data, page: innerOpts.page, pageSize: innerOpts.pageSize, totalCount: total_count };
 	}
 
 	static async getSingle(id: number): Promise<Kit> {
 		return DataAccess.db.where({id: id}).first().from<Kit>('kits');
 	}
 
-	static async search(text: string): Promise<Kit[]> {
-		const match = `%${text}%`;
+	static async autocomplete(search: string): Promise<Kit[]> {
+		const match = `%${search}%`;
 		return await DataAccess.db
 			.orWhere('id', 'like', match)
 			.orWhere('label_id', 'like', match)

@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Search from './kits/Search';
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         </div>
       </header>
       <main>
-        <h1>Welcome!</h1>
+        <Search/>
       </main>
     </div>
   );
