@@ -3,13 +3,10 @@ import React, { useRef, useEffect, useState, CSSProperties } from 'react';
 const Loading: React.FunctionComponent<{loading: boolean}> = (props) => {
   const container = useRef(null);
 	const [overlay, setOverlay] = useState({height: 75, width: 75});
-  
-	let count = 0;
 
 	const [observer] = useState(new ResizeObserver(entries => {
 		const entry = entries?.[0];
 		if(entry) {
-			count++;
 			setOverlay({
 				height: entry.contentRect.height,
 				width: entry.contentRect.width,
@@ -21,6 +18,7 @@ const Loading: React.FunctionComponent<{loading: boolean}> = (props) => {
 		if(container.current && observer != null) {
 			observer.observe(container.current)
 		}
+		return () => { observer.disconnect(); };
 	});
 
 	function showOverlay() {
@@ -39,7 +37,7 @@ const Loading: React.FunctionComponent<{loading: boolean}> = (props) => {
 			return (
 				<div className="d-flex justify-content-center align-items-center" style={overlayStyle}>
 					<span className="visually-hidden">Loading...</span>
-					<div className="spinner-border text-primary" style={{width: "60px", height: "60px"}}>
+					<div className="spinner-border text-dark" style={{width: "60px", height: "60px"}}>
 						<span className="visually-hidden">Loading...</span>
 					</div>
 				</div>

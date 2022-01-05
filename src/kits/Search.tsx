@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Kit } from '../../api/src/shared-types/kit';
 import { PagedResult } from '../../api/src/shared-types/pagedResult';
 import Loading from '../shared/Loading';
 import { Pager } from '../shared/Pager';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 
 
 function Search() {
@@ -10,6 +11,21 @@ function Search() {
   const [error, setError] = useState<string>(null);
   const [searchText, setSearchText] = useState('');
   const [results, setResults] = useState<PagedResult<Kit>>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    search(searchParams.get('search'), +searchParams.get('page'))
+  }, [searchParams]);
+
+  function updateSearchParams(searchText: string, page?: number) {
+    let newSearchParams = new URLSearchParams()
+    newSearchParams.set('search', searchText)
+    if (page) {
+      newSearchParams.set('page', page.toString());
+    }
+
+    setSearchParams(newSearchParams);
+  }
 
   async function search(searchText: string, page?: number) {
     setLoading(true);
@@ -39,15 +55,18 @@ function Search() {
     }
   }
 
+  function searchChange(newSearch: string) {
+    updateSearchParams(newSearch);
+  }
+
   function pageChanged(page: number) {
-    console.log(page);
-    search(searchText, page);
+    updateSearchParams(searchParams.get('search'), page);
   }
   
   function resultRows() {
     if(results?.data?.length) {
       return results.data.map(r => (
-        <tr>
+        <tr key={r.id}>
           <th scope="row">{r.id}</th>
           <td>{r.label_id}</td>
           <td> {r.shipping_tracking_code}</td>
@@ -84,7 +103,7 @@ function Search() {
   return (
     <div className='container'>
       <h1 className='mt-2'>Search Kits</h1>
-      <form onSubmit={e => { e.preventDefault(); search(searchText); }}>
+      <form onSubmit={e => { e.preventDefault(); searchChange(searchText); }}>
         <div className='input-group'>
           <input className="form-control" type="text" placeholder="Search" value={searchText} onChange={e => setSearchText(e.target.value)}></input>
           <button className="btn btn-outline-secondary" type="submit"><i className="bi bi-search"></i></button>
