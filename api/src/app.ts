@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
+import { registerKitRoutes } from './routes/kitRoutes';
 
 const app = new Koa();
 const router = new Router();
@@ -16,13 +17,7 @@ router.get('/', async (ctx) => {
 	ctx.body = desc;
 });
 
-router.get('/kits', (ctx) => {
-	const kits = [
-		{ id: 1, labelId: "84-507-1938", shippingTrackingCode : "3241486508" }
-	];
-
-  ctx.body = kits;
-});
+registerKitRoutes(router);
 
 app
 	.use(bodyParser())

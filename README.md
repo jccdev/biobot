@@ -1,35 +1,52 @@
-# Getting Started with Create React App
+# Biobot Kits
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This app provides Search for Kits functionality.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn db-setup`
 
-Runs the app in the development mode.\
+Creates a Sqlite3 db and saves to db/local.sqlite3. It will also setup the kits table.
+
+You can reset the DB by deleting the db/local.sqlite3 file and run this command again.
+
+### `yarn api-start`
+
+Runs the Koa api app in the development mode.\
+Reachable at the url: [http://localhost:3001](http://localhost:3001). 
+
+The api will reload on changes.
+
+### `yarn api-build`
+
+Builds the Koa api app for production to the `api/build` folder.
+
+### `yarn ui-start`
+
+Runs the React app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `yarn ui-test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### `yarn ui-build`
 
-Builds the app for production to the `build` folder.\
+Builds the React app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Your React app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### `yarn ui-eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
