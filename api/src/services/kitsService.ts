@@ -14,7 +14,7 @@ export class KitsService {
 
 		let query = DataAccess.db.select();
 
-		if (innerOpts.search) {
+		if (innerOpts.search != null) {
 			const match = `%${innerOpts.search}%`;
 			query = query
 				.orWhere('id', 'like', match)
@@ -27,6 +27,7 @@ export class KitsService {
 			.offset((innerOpts.page - 1) * innerOpts.pageSize)
 			.limit(innerOpts.pageSize)
 			.from<Kit>('kits');
+
 		const total_count = +(await query.clone().count('*').from<Kit>('kits'))[0][
 			'count(*)'
 		];

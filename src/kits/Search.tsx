@@ -18,7 +18,9 @@ function Search() {
 
 	function updateSearchParams(searchText: string, page?: number) {
 		let newSearchParams = new URLSearchParams();
-		newSearchParams.set('search', searchText);
+		if (searchText) {
+			newSearchParams.set('search', searchText);
+		}
 		if (page) {
 			newSearchParams.set('page', page.toString());
 		}
@@ -31,10 +33,7 @@ function Search() {
 		setError(null);
 
 		try {
-			let url = `http://localhost:3001/kits?search=${searchText}`;
-			if (page) {
-				url += `&page=${page}`;
-			}
+			const url = `http://localhost:3001/kits?${searchParams.toString()}`;
 
 			const response = await fetch(url);
 

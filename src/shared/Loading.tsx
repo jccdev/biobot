@@ -56,13 +56,11 @@ const Loading: React.FunctionComponent<{ loading: boolean }> = (props) => {
 	}
 
 	return (
-		<div
-			ref={container}
-			className="py-3"
-			style={{ minHeight: '75px', position: 'relative' }}
-		>
+		<div ref={container} style={{ minHeight: '75px', position: 'relative' }}>
 			{showOverlay()}
-			<div style={{ zIndex: 1 }}>{props.children}</div>
+			<div className="py-1" style={{ zIndex: 1 }}>
+				{props.children}
+			</div>
 		</div>
 	);
 };
