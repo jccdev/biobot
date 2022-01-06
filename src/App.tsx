@@ -12,15 +12,17 @@ function App() {
 				<div className="px-3 py-2 bg-dark text-white">
 					<div className="container">
 						<div className="d-flex flex-wrap">
-							<a href="/" className="d-flex align-items-center me-auto">
+							<NavLink to="/" className="d-flex align-items-center me-auto">
 								<img src={logo} className="App-logo" alt="logo" />
-							</a>
+							</NavLink>
 							<ul className="nav">
 								<li>
 									<NavLink
 										to="/"
-										className={(active) =>
-											active ? 'nav-link text-secondary' : 'nav-link text-white'
+										className={(route) =>
+											route.isActive
+												? 'nav-link text-secondary'
+												: 'nav-link text-white'
 										}
 										end
 									>
@@ -30,9 +32,12 @@ function App() {
 								<li>
 									<NavLink
 										to="/upload"
-										className={(active) =>
-											active ? 'nav-link text-secondary' : 'nav-link text-white'
+										className={(route) =>
+											route.isActive
+												? 'nav-link text-secondary'
+												: 'nav-link text-white'
 										}
+										end
 									>
 										Upload
 									</NavLink>

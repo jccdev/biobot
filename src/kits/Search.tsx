@@ -257,7 +257,7 @@ function Search() {
 					></input>
 					<button
 						className="btn btn-outline-secondary"
-						type="submit"
+						type="button"
 						onClick={(e) => searchChange(searchText)}
 					>
 						<i className="bi bi-search"></i>

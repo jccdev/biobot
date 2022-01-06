@@ -58,6 +58,18 @@ export class KitsService {
 		return DataAccess.db.where({ id: id }).first().from<Kit>('kits');
 	}
 
+	static async upload(kits: []): Promise<void> {
+		const batchSize = 100;
+
+		while (kits.length > 0) {
+			const max = kits.length < batchSize ? kits.length : batchSize;
+			const batch = kits.splice(0, max);
+			await DataAccess.db<Kit>('kits').insert(batch).onConflict('id').merge();
+		}
+
+		return;
+	}
+
 	static async autocomplete(search: string): Promise<Kit[]> {
 		const cacheHit = CacheService.get<Kit[]>('kits', search);
 		if (cacheHit) {

@@ -21,6 +21,12 @@ export function registerKitRoutes(router: Router) {
 		ctx.body = kits;
 	});
 
+	router.post('/kits/upload', async (ctx) => {
+		await KitsService.upload(ctx.request.body);
+		ctx.status = 200;
+		ctx.message = 'Ok.';
+	});
+
 	router.get('/kits/autocomplete', async (ctx) => {
 		const searchText = ctx.query['search'] as string;
 		const kits = await KitsService.autocomplete(searchText);
