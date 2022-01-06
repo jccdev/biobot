@@ -12,11 +12,12 @@ function convertToNullableInt(value: string): number {
 export function registerKitRoutes(router: Router) {
 	router.get('/kits', async (ctx) => {
 		const search = ctx.query['search'] as string;
+		const exact = (ctx.query['exact'] as string) === 'true';
 		let page: number = convertToNullableInt(ctx.query['page'] as string);
 		const pageSize: number = convertToNullableInt(
 			ctx.query['pageSize'] as string,
 		);
-		const kits = await KitsService.get({ search, page, pageSize });
+		const kits = await KitsService.get({ search, exact, page, pageSize });
 		ctx.body = kits;
 	});
 

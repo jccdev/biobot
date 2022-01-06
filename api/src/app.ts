@@ -10,9 +10,8 @@ const port = 3001;
 router.get('/', async (ctx) => {
 	let desc = 'Biobot Kits API';
 	desc += '\nGET /kits';
-	desc += '\nPOST /kits';
-	desc += '\nPUT /kits/{id}';
-	desc += '\nDELETE /kits/{id}';
+	desc += '\nGET /kits/{id}';
+	desc += '\nGET /kits/autocomplete';
 	desc += '\nPOST /kits/upload';
 	ctx.body = desc;
 });

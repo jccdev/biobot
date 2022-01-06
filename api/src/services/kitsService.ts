@@ -4,9 +4,15 @@ import { DataAccess } from './dataAccess';
 
 export class KitsService {
 	static async get(
-		options?: Partial<{ search?: string; pageSize: number; page: number }>,
+		options?: Partial<{
+			search?: string;
+			exact?: boolean;
+			pageSize: number;
+			page: number;
+		}>,
 	): Promise<PagedResult<Kit>> {
 		const innerOpts = {
+			exact: options.exact ?? false,
 			search: options.search,
 			pageSize: options.pageSize ?? 10,
 			page: options.page ?? 1,
@@ -15,11 +21,15 @@ export class KitsService {
 		let query = DataAccess.db.select();
 
 		if (innerOpts.search != null) {
-			const match = `%${innerOpts.search}%`;
-			query = query
-				.orWhere('id', 'like', match)
-				.orWhere('label_id', 'like', match)
-				.orWhere('shipping_tracking_code', 'like', match);
+			if (options.exact) {
+				query = query.where({ id: +innerOpts.search });
+			} else {
+				const match = `%${innerOpts.search}%`;
+				query = query
+					.orWhere('id', 'like', match)
+					.orWhere('label_id', 'like', match)
+					.orWhere('shipping_tracking_code', 'like', match);
+			}
 		}
 
 		const data = await query
@@ -50,6 +60,7 @@ export class KitsService {
 			.orWhere('id', 'like', match)
 			.orWhere('label_id', 'like', match)
 			.orWhere('shipping_tracking_code', 'like', match)
+			.limit(5)
 			.from<Kit>('kits');
 	}
 }

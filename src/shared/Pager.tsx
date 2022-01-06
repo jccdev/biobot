@@ -10,7 +10,7 @@ interface PagerProps {
 export function Pager(props: PagerProps) {
 	function previous() {
 		let page = props.currentPage - 1;
-		page = page <= 0 ? totalPages() : page; // wrap page around
+		page = page <= 0 ? totalPages() : page;
 		props.onChange(page);
 	}
 
@@ -30,6 +30,7 @@ export function Pager(props: PagerProps) {
 				type="button"
 				className="btn btn-outline-dark"
 				onClick={(e) => previous()}
+				disabled={props.currentPage === 1}
 			>
 				<i className="bi bi-arrow-left"></i>
 			</button>
@@ -40,6 +41,7 @@ export function Pager(props: PagerProps) {
 				type="button"
 				className="btn btn-outline-dark"
 				onClick={(e) => next()}
+				disabled={props.currentPage === totalPages()}
 			>
 				<i className="bi bi-arrow-right"></i>
 			</button>

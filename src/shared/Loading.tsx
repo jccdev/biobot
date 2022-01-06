@@ -28,7 +28,6 @@ const Loading: React.FunctionComponent<{ loading: boolean }> = (props) => {
 	function showOverlay() {
 		if (props.loading) {
 			const overlayStyle: CSSProperties = {
-				zIndex: 2,
 				position: 'absolute',
 				top: 0,
 				left: 0,
@@ -58,9 +57,7 @@ const Loading: React.FunctionComponent<{ loading: boolean }> = (props) => {
 	return (
 		<div ref={container} style={{ minHeight: '75px', position: 'relative' }}>
 			{showOverlay()}
-			<div className="py-1" style={{ zIndex: 1 }}>
-				{props.children}
-			</div>
+			<div className="py-1">{props.children}</div>
 		</div>
 	);
 };
