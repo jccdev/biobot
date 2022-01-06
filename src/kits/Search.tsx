@@ -116,7 +116,6 @@ function Search() {
 	}
 
 	function resetAuto() {
-		console.log('reset');
 		setSelectedAutoItemIx(null);
 		setAutoItems([]);
 	}
