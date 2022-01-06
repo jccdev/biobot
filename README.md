@@ -12,6 +12,10 @@ Creates a Sqlite3 db and saves to db/local.sqlite3. It will also setup the kits 
 
 You can reset the DB by deleting the db/local.sqlite3 file and run this command again.
 
+### `yarn start`
+
+Runs both api-start and ui-start concurrently.
+
 ### `yarn api-start`
 
 Runs the Koa api app in the development mode.\

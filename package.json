@@ -36,6 +36,7 @@
 		"web-vitals": "^2.1.0"
 	},
 	"scripts": {
+		"start": "concurrently \"yarn ui-start\" \"yarn api-start\"",
 		"ui-start": "react-scripts start",
 		"ui-build": "react-scripts build",
 		"ui-test": "react-scripts test",
